@@ -1,3 +1,4 @@
+using namespace System.Collections.Generic
 <#
 .SYNOPSIS
     Lists mailboxes used space
@@ -17,14 +18,20 @@ function Get-MailboxReport {
     param(
         [parameter(ValueFromPipeline)][Object[]]$InputObject
     )
-
+    begin {
+        $return = [List[PSCustomObject]]::New()
+    }
     process {
         foreach ($i in $InputObject) {
             $Output = [PSCustomObject]@{
                 DisplayName = $i.DisplayName
                 TotalItemSize = $i.TotalItemSize -replace '.+\(|\sbytes.+|,' -as [int64]
             }
-            [MailboxStatistics]::MailboxReport($Output)
+            $return.Add([MailboxStatistics]::MailboxReport($Output))
         }
+        
+    }
+    end {
+        return $return
     }
 }

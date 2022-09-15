@@ -53,7 +53,7 @@ function Get-365Mailbox {
         if (!$PrimarySMTPAddress) { continue }
         [UserInfo]::MailboxReport($DisplayName, $PrimarySMTPAddress, "", $ProhibitSendReceiveQuota, $IsShared, $LastUserActionTime, $IsDirSynced) |
         Select-Object @{L = "Display Name"; E = { $_.DisplayName } }, @{L = "Email Address"; E = { $_.EmailAddress } }, @{L= "Mailbox Size"; E={$_.MailboxSize}},
-        @{L = "Prohibit Send At"; E = { $_.MaxMailboxSize } }, @{L = "Shared Mailbox"; E = { $_.SharedMB } }, @{L = "Last User Action"; E = { $_.LastUserAction } },
+        @{L = "Prohibit Send At"; E = { $_.ProhibitSendReceiveQuota } }, @{L = "Shared Mailbox"; E = { $_.SharedMB } }, @{L = "Last User Action"; E = { $_.LastUserAction } },
         @{L = "Directory Synced"; E = { $_.DirectorySynced }}
     }
 }
